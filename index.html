@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>React App</title>
+
+  <!-- React CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel (to run JSX in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin:0;">
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const { useState, useEffect, useRef } = React;
+
+    const THEMES = {
+      light: {
+        bg: "#F0F4FF", surface: "#FFFFFF", card: "#FFFFFF", cardHover: "#F8FAFF",
+        border: "rgba(0,0,0,0.08)",
+        text: "#0D1425"
+      }
+    };
+
+    function Card({ children, style, onClick, hover, t }) {
+      const [hov, setHov] = useState(false);
+
+      return (
+        <div
+          onClick={onClick}
+          onMouseEnter={() => setHov(true)}
+          onMouseLeave={() => setHov(false)}
+          style={{
+            background: hov && hover ? t.cardHover : t.card,
+            border: `1px solid ${t.border}`,
+            borderRadius: 16,
+            padding: 20,
+            transition: "all 0.2s",
+            cursor: onClick ? "pointer" : "default",
+            ...style
+          }}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <div style={{ padding: 20, background: THEMES.light.bg }}>
+          <Card t={THEMES.light}>
+            <h2>Hello from your React App 🚀</h2>
+          </Card>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+
+  </script>
+</body>
+</html>
